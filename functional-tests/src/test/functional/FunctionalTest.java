@@ -2,6 +2,9 @@ package test.functional;
 
 import java.util.concurrent.TimeUnit;
 import java.util.List;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.junit.Test;
 import org.junit.After;
@@ -77,10 +80,28 @@ public class FunctionalTest {
         assertTrue(h1Content.contains("Nature et aventure"));
 
         // get navbar
+        // System.out.println("++++++++++++++++");
+        // System.out.println(driver.findElements(By.cssSelector("#findNavBar")));
+        // System.out.println("++++++++++++++++");
+        // div #findNavBar exist
         assertTrue(driver.findElements(By.cssSelector("#findNavBar")).size() > 0);
-        
-        // get input search
-        //assertTrue(driver.findElements(By.cssSelector("#mainKeywords")).size() > 0);
+
+        // check if input
+        assertTrue(driver.findElements(By.cssSelector("#mainKeywords")).size() > 0);
+
+        // check if radius search
+        assertTrue(driver.findElements(By.cssSelector("#simple-radius")).size() > 0);
+
+        // get if city search
+        assertTrue(driver.findElements(By.cssSelector("#simple-location")).size() > 0);
+
+        // contain choice  Groupe & Calendrier
+        List<WebElement> groupeCalendrier = driver.findElements(By.cssSelector("#findNavBar .lastUnit ul li"));
+        for(WebElement e : groupeCalendrier) {
+            String attribu = e.getAttribute("textContent");
+            //System.out.println(e.getAttribute("textContent"));
+            assertTrue(attribu.contains("Groupes") || attribu.contains("Calendrier"));
+        }
 
         // get choix par défaut : pertinence
         assertTrue(driver.findElement(By.cssSelector("a.selected[data-value=default]")).getAttribute("textContent").toLowerCase().contains("pertinence"));
@@ -92,9 +113,17 @@ public class FunctionalTest {
             if (!e.getAttribute("class").contains("display-none")){
                 //System.out.println(e.getAttribute("textContent"));
                 assertTrue(attribu.contains("pertinence") || attribu.contains("plus récents") || 
-                           attribu.contains("nombre de membres") || attribu.contains("proximité"));
+                attribu.contains("nombre de membres") || attribu.contains("proximité"));
             }
         }
+
+        // Calendrier
+        WebElement calendarClick = driver.findElement(By.cssSelector("#simple-view-selector-event"));
+        calendarClick.click();
+        WebElement divGroupe = driver.findElement(By.cssSelector("#simple-find-order"));
+        WebElement divCalendar = driver.findElement(By.cssSelector("#simple-view"));
+        assertTrue(!(divCalendar.getAttribute("class").contains("display-none")) && (divGroupe.getAttribute("class").contains("display-none")));
+
     }
 
     @Test
