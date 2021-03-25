@@ -97,6 +97,12 @@ public class FunctionalTest {
         }
     }
 
+    @Test
+    public void testFicheMeetup() throws Exception {
+        driver.get("https://www.meetup.com/fr-FR/promenades-et-randonnees/?_locale=fr-FR");
+
+    }
+
     @After
     public void tearDown() throws Exception {
         driver.quit();
