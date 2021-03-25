@@ -78,10 +78,6 @@ public class FunctionalTest {
         String h1Content = h1.getText();
         assertTrue(h1Content.contains("Nature et aventure"));
 
-        // get navbar
-        // System.out.println("++++++++++++++++");
-        // System.out.println(driver.findElements(By.cssSelector("#findNavBar")));
-        // System.out.println("++++++++++++++++");
         // div #findNavBar exist
         assertTrue(driver.findElements(By.cssSelector("#findNavBar")).size() > 0);
 
